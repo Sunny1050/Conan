@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>出場</title>
+  <style>
+    #background-image {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 771px;
+      height: 588px;
+      z-index: -1; /* 将背景图放置在层级的底部 */
+      transition: opacity 1s ease-in-out; /* 添加转场效果 */
+    }
+    
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 50px;
+    }
+    
+    #role {
+      width: 200px;
+      height: 190px;
+      margin: auto;
+      position: fixed;
+      top: 35%;
+      left: 10%;
+      z-index: 2;
+    }
+    
+    #dialog {
+      width: 400px;
+      height: 200px;
+      margin: auto;
+      position: fixed;
+      top: 63%;
+      left: 10%;
+      z-index: 1;
+    }
+    
+    #dialog p {
+      position: absolute;
+      top: 28px; /* 调整文字在图片上方的位置 */
+      left: 22px; /* 调整文字在图片左边的位置 */
+      color: white; /* 设置文字颜色 */
+    }
+  </style>
+</head>
+<body>
+  <img id="background-image" src="工藤宅.jpg" alt="背景图">
+  <div id="dialog" onclick="nextSentence()">
+    <img src="對話框.png" alt="对话框">
+    <p id="sentence">点击对话框开始对话：</p>
+  </div>
+  <img id="role" src="滾筒洗衣機.png" alt="Role">
+  <script>
+    var sentences = [
+      "大家好，我是高中生蒸蛋滾筒洗衣機",
+      "某天和青梅竹馬兼同學的角蘭受邀參加一場晚宴",
+      "沒想到，卻發生了離奇的殺人事件!",
+      "事情要從那時說起------"
+    ];
+
+    var currentIndex = -1;
+    var sentenceElement = document.getElementById('sentence');
+    var backgroundImage = document.getElementById('background-image');
+
+    function nextSentence() {
+      if (currentIndex < sentences.length - 1) {
+        currentIndex++;
+        sentenceElement.innerText = sentences[currentIndex];
+      } else {
+        // 在对话结束后添加转场效果
+        backgroundImage.style.opacity = '0';
+        setTimeout(() => {
+          // 在转场结束后更新文本内容
+          sentenceElement.innerText = "這是一個下著大雨的夜晚，一台白色的豐田在蜿蜒的山路上呼嘯而過。";
+          // 这里可以添加其他场景或文本的处理
+          // 比如可以设置一个新的定时器，在一定时间后执行其他操作
+          setTimeout(() => {
+            alert("下一个场景！");
+          }, 1000);
+        }, 1000); // 这里的时间应与转场效果的时间一致
+      }
+    }
+  </script>
+</body>
+</html>
