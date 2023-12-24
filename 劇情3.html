@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    .transition-container {
+      position: relative;
+      width: 771px;
+      height: 588px;
+      overflow: hidden;
+    }
+    #background-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      transition: transform 1s ease-in-out;
+    }
+    .content {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      transition: transform 1s ease-in-out;
+    }
+    #role {
+      width: 230px;
+      height: 230px;
+      margin: auto;
+      position: absolute;
+      top: 35%;
+      left: 10%;
+      z-index: 2;
+    }
+    #dialog {
+      width: 400px;
+      height: 200px;
+      margin: auto;
+      position: absolute;
+      top: 63%;
+      left: 10%;
+      z-index: 1;
+    }
+    #dialog p {
+      position: absolute;
+      top: 28px;
+      left: 35px;
+      color: white;
+      width: 118%;
+      font-size: 1.1em;
+    }
+    .button-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+    }
+    .button {
+      display: inline-block;
+      background-color:darkblue;
+      color: white;
+      border: none;
+      padding: 5px 5px;
+      text-align: center;
+      text-decoration: none;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 10px;
+      transition: background-color 0.3s ease;
+    }
+    .button:hover {
+      background-color: #2980b9;
+    }
+  </style>
+</head>
+<body>
+  <div class="transition-container">
+    <img id="background-image" src="閣樓.jpg" alt="背景图">
+    <div id="dialog" onclick="nextSentence()">
+      <img src="對話框.png" alt="對話框">
+      <p id="sentence">點擊對話框開始對話：</p>
+    </div>
+    <img id="role" src="滾筒洗衣機.png" alt="Role" >
+  </div>
+  <div class="button-container">
+    <button id="introduction" class="button">人物介紹</button>
+    <button id="playButton"class="button">播放背景音樂</button>
+    <audio id="audio" src="結局音樂.mp3"></audio>
+  </div>
+</body>
+  <script>
+
+  var sentences = 
+  ["關於寶藏的線索我已經破解了！但你要先保證我把答案告訴你之後會放我們走。",
+   "啊啦，但是，現在的你好像並沒有資格跟我談條件噢？（晃了晃手上的槍）",
+   "如果你不希望你跟你的angel一起在這裡命喪黃泉的話，就只能把答案告訴我（把槍對準角蘭）。",
+   "蘭！（驚慌）",
+   "可惡……（握拳）",
+   "好吧，我告訴你就是了。",
+   "那張塔羅牌是上面用羅馬數字寫著編號13的死神牌，而背面在經過陽光照射後顯現了數字的九宮格。",
+   "結合我們後來發現了閣樓的鐘右下角的背側被刻上了12698741 12369這一串數字，只要把這串數字對應到九宮格上的位置，最後連線起來，就能得到數字07。",
+   "因為鐘是12小時制的，因此不可能出現13點，因此，只要將鐘轉動到07:13，就能打開寶藏。",
+   "（眾人驚嘆）",
+   "（看了看自己的表）",
+   "我就知道小偵探你不會讓我失望的。（得意的笑）",
+   "（再次把槍指向眾人）",
+   "好了，辛苦你們了，這齣鬧劇也該結束了，波本，把他們綁起來。",
+   "對不起了各位。",
+   "（趁著將眾人綁起來的機會，偷偷塞了一些東西進貓哥手裡）",
+   "（調動鐘的時間）",
+   "波本，幹得好，我們很快就可以完成任務了。",
+   "（勉強擠出笑容）是啊！",
+   "（整個鐘的外皮開始脫落，裡面隱隱透出金色）",
+   "這個鐘是……黃金做的！？",
+   "唉啊，一個純金打造的鐘，真是不錯的禮物，可惜有點難帶走呢！",
+   "這可真是麻煩了……",
+   "那我們可沒有心力耗費在這群人身上了，就讓他們隨著這棟別館一起被埋葬吧。",
+   "說的也是。",
+   "辛苦了各位偵探們，今天黃昏別館就是你們的葬身之地了，我們離開5分鐘後，這棟房子就會爆炸，祝你們玩得愉快～",
+   "走吧波本。",
+   "（苦愛酒和暗示透鎖上門後帶著黃金鐘快速離開）",
+   "現在該怎麼辦啊？我們真的要死在這了嗎？（哽咽）",
+   "（俐落的解開自己的繩索）請各位再忍耐一下，我這就幫你們解開。",
+   "你哪來的刀啊？",
+   "剛剛暗示先生趁著那位女士不注意時，偷偷將鑰匙和一把小刀塞給了我。",
+   "哼，還算我沒看錯人。",
+    "但是…我們根本來不及在爆炸前離開這裡啊！",
+   "請不用擔心，美麗的小姐，我方才已經趁亂透過我的智能手錶請求警方的支援了。",
+   "馬上就有直升機來接我們了，我們快上頂樓吧！",
+   "真有你的，不愧是警視總監的兒子。我就知道我堂堂大偵探命不該絕。",
+   "（不久後眾人搭乘直升機離去）",
+   "（直升機上）",
+   "剛剛真的是有驚無險。",
+   "（傳來爆炸聲）",
+   "我再也不要隨便接受奇怪的邀請了，尤其是像這種之前發生過奇怪案件的地方。（拍拍胸口）",
+   "不過說到這個，40年前的案件果然有蹊蹺對吧。",
+   "沒錯，我想，拍賣會跟登山客什麼的都是個幌子。",
+   "主要是為了掩蓋當年，酒廠老闆找來各行各業的專家幫忙尋寶，最終沒能找到寶藏，為了隱藏消息所以殺了所有人滅口的這件事吧！",
+   "那個酒廠老闆還真是喪心病狂啊……",
+   "是啊，還比不上那個大上呢！至少他還許諾要分給找到寶藏的人一半呢！",
+   "可惜了，一個純金的鐘就算只有一半也是好大一筆財富了。（撇嘴）",
+   "不過這趟旅程也不是完全沒有收穫呢。（意味頗深的微笑）",
+   "是啊，畢竟收穫了一位鼎鼎大名的國際罪犯呢！",
+   "罪犯？你們在說什麼啊？",
+   "畢竟都被盜用身份了，本尊怎麼可能不親自來查看情況呢？你說是吧，毛•利•叔•叔？",
+   "啊哈…啊哈，你們在說什麼我怎麼聽不懂……（汗顏）",
+   "（轉身拉開機門）",
+   "（一躍而下）",
+   "爸爸！？（趴在窗邊著急的向外看）",
+   "（一道白色身影從天空中劃過）",
+   "很高興認識各位，希望我們來日還能相見。（揮揮手）",
+   "爸爸竟然被怪盜積德假扮了嗎？洗衣機你是什麼時候發現的啊？",
+   "從他今天全程竟然都沒有抽煙的時候就開始懷疑了，然而最關鍵的一點還是，他在倒酒的時候下意識用了左手，而叔叔可是一個徹頭徹尾的右撇子啊。",
+   "雖然怪盜積德在吃飯或是寫字的時候掩飾的很好，但可能在倒酒的時候一時疏忽了吧？",
+   "原來是這樣，那爸爸現在在哪裡？他該不會出事了吧？",
+   "不用擔心，他現在應該在家裡喝醉酒睡著了。",
+   "Zzz……"
+]
+  var currentIndex = -1;
+  var sentenceElement = document.getElementById('sentence');
+  var backgroundImageElement = document.getElementById('background-image');
+  var roleImageElement = document.getElementById('role');
+function A(){
+    roleImageElement.src = '滾筒洗衣機.png';
+    roleImageElement.style.width = '230px';
+    roleImageElement.style.height = '230px';
+}
+function B(){
+    roleImageElement.src = '角蘭.png';
+    roleImageElement.style.width = '220px';
+    roleImageElement.style.height = '211px';
+}
+function C(){
+    roleImageElement.src = '毛利小五狼.png';
+    roleImageElement.style.width = '240px';
+    roleImageElement.style.height = '200px';
+}
+function D(){
+    roleImageElement.src = '貓哥.png';
+    roleImageElement.style.width = '190px';
+    roleImageElement.style.height = '200px';
+}
+function E(){
+    roleImageElement.src = '腹部平刺.png';
+    roleImageElement.style.width = '190px';
+    roleImageElement.style.height = '200px';
+}
+function F(){
+    roleImageElement.src = '暗示透.png';
+    roleImageElement.style.width = '200px';
+    roleImageElement.style.height = '200px';
+}
+function G(){
+    roleImageElement.src = '白馬王子探.png';
+    roleImageElement.style.width = '200px';
+    roleImageElement.style.height = '200px';
+}
+function H(){
+    roleImageElement.src = '大上助善.png';
+    roleImageElement.style.width = '210px';
+    roleImageElement.style.height = '210px';
+}
+function I(){
+    roleImageElement.src = '女僕.png';
+    roleImageElement.style.width = '190px';
+    roleImageElement.style.height = '200px';
+}
+function J(){
+    roleImageElement.src = '神秘人.png';
+    roleImageElement.style.width = '190px';
+    roleImageElement.style.height = '200px';
+}
+function K(){
+    roleImageElement.src = '無.jpg';
+    roleImageElement.style.width = '1px';
+    roleImageElement.style.height = '1px';
+}
+function L(){
+    roleImageElement.src = '假人.png';
+    roleImageElement.style.width = '190px';
+    roleImageElement.style.height = '200px';
+}
+function M(){
+    roleImageElement.src = '苦愛酒.png';
+    roleImageElement.style.width = '240px';
+    roleImageElement.style.height = '240px';
+}
+function N(){
+    roleImageElement.src = '怪盜積德.png';
+    roleImageElement.style.width = '190px';
+    roleImageElement.style.height = '200px';
+}
+  function nextSentence() {
+  if (currentIndex < sentences.length - 1) {
+    currentIndex++;
+    sentenceElement.innerText = sentences[currentIndex];
+    if (sentences[currentIndex] == "關於寶藏的線索我已經破解了！但你要先保證我把答案告訴你之後會放我們走。") {
+        A();
+   }
+   if (sentences[currentIndex] == "啊啦，但是，現在的你好像並沒有資格跟我談條件噢？（晃了晃手上的槍）") {
+        M();
+   }
+   if (sentences[currentIndex] == "蘭！（驚慌）") {
+        A();
+   }
+   if (sentences[currentIndex] == "（眾人驚嘆）") {
+        K();
+   }
+   if (sentences[currentIndex] == "（看了看自己的表）") {
+        G();
+   }
+   if (sentences[currentIndex] == "我就知道小偵探你不會讓我失望的。（得意的笑）") {
+        M();
+   }
+   if (sentences[currentIndex] == "對不起了各位。") {
+        F();
+   }
+   if (sentences[currentIndex] == "（調動鐘的時間）") {
+        M();
+   }
+   if (sentences[currentIndex] == "（勉強擠出笑容）是啊！") {
+        F();
+   }
+   if (sentences[currentIndex] == "（整個鐘的外皮開始脫落，裡面隱隱透出金色）") {
+        K();
+   }
+   if (sentences[currentIndex] == "這個鐘是……黃金做的！？") {
+        B();
+   }
+   if (sentences[currentIndex] == "唉啊，一個純金打造的鐘，真是不錯的禮物，可惜有點難帶走呢！") {
+        M();
+   }
+   if (sentences[currentIndex] == "這可真是麻煩了……"){
+       F();
+   }
+   if (sentences[currentIndex] == "說的也是。") {
+        M();
+   }
+   if (sentences[currentIndex] == "（苦愛酒和暗示透鎖上門後帶著黃金鐘快速離開）") {
+        K();
+   }
+   if (sentences[currentIndex] == "現在該怎麼辦啊？我們真的要死在這了嗎？（哽咽）") {
+        B();
+   }
+   if (sentences[currentIndex] == "（俐落的解開自己的繩索）請各位再忍耐一下，我這就幫你們解開。") {
+        D();
+   }
+   if (sentences[currentIndex] == "剛剛暗示先生趁著那位女士不注意時，偷偷將鑰匙和一把小刀塞給了我。") {
+        D();
+   }
+   if (sentences[currentIndex] == "你哪來的刀啊？") {
+        E();
+   }
+   if (sentences[currentIndex] == "哼，還算我沒看錯人。") {
+        C();
+   }
+   if (sentences[currentIndex] == "但是…我們根本來不及在爆炸前離開這裡啊！") {
+        B();
+   }
+   if (sentences[currentIndex] == "請不用擔心，美麗的小姐，我方才已經趁亂透過我的智能手錶請求警方的支援了。") {
+        G();
+   }
+   if (sentences[currentIndex] == "真有你的，不愧是警視總監的兒子。我就知道我堂堂大偵探命不該絕。") {
+        C();
+   }
+   if (sentences[currentIndex] == "（不久後眾人搭乘直升機離去）") {
+        K();
+   }
+   if (sentences[currentIndex] == "剛剛真的是有驚無險。") {
+        B();
+   }
+   if (sentences[currentIndex] == "（傳來爆炸聲）") {
+        K();
+   }
+   if (sentences[currentIndex] == "我再也不要隨便接受奇怪的邀請了，尤其是像這種之前發生過奇怪案件的地方。（拍拍胸口）") {
+        E();
+   }
+   if (sentences[currentIndex] == "不過說到這個，40年前的案件果然有蹊蹺對吧。") {
+        G();
+   }
+   if (sentences[currentIndex] == "沒錯，我想，拍賣會跟登山客什麼的都是個幌子。") {
+        A();
+   }
+   if (sentences[currentIndex] == "那個酒廠老闆還真是喪心病狂啊……") {
+        E();
+   }
+   if (sentences[currentIndex] == "是啊，還比不上那個大上呢！至少他還許諾要分給找到寶藏的人一半呢！") {
+        C();
+   }
+   if (sentences[currentIndex] == "不過這趟旅程也不是完全沒有收穫呢。（意味頗深的微笑）") {
+        G();
+   }
+   if (sentences[currentIndex] == "是啊，畢竟收穫了一位鼎鼎大名的國際罪犯呢！") {
+        E();
+   }
+   if (sentences[currentIndex] == "罪犯？你們在說什麼啊？") {
+        B();
+   }
+   if (sentences[currentIndex] == "畢竟都被盜用身份了，本尊怎麼可能不親自來查看情況呢？你說是吧，毛•利•叔•叔？") {
+        A();
+   }
+   if (sentences[currentIndex] == "啊哈…啊哈，你們在說什麼我怎麼聽不懂……（汗顏）") {
+        C();
+   }
+   if (sentences[currentIndex] == "爸爸！？（趴在窗邊著急的向外看）") {
+        B();
+   }
+   if (sentences[currentIndex] == "（一道白色身影從天空中劃過）") {
+        K();
+   }
+   if (sentences[currentIndex] == "很高興認識各位，希望我們來日還能相見。（揮揮手）") {
+        N();
+   }
+   if (sentences[currentIndex] == "爸爸竟然被怪盜積德假扮了嗎？洗衣機你是什麼時候發現的啊？") {
+        B();
+   }
+   if (sentences[currentIndex] == "從他今天全程竟然都沒有抽煙的時候就開始懷疑了，然而最關鍵的一點還是，他在倒酒的時候下意識用了左手，而叔叔可是一個徹頭徹尾的右撇子啊。") {
+        A();
+   }
+   if (sentences[currentIndex] == "原來是這樣，那爸爸現在在哪裡？他該不會出事了吧？") {
+        B();
+   }
+   if (sentences[currentIndex] == "不用擔心，他現在應該在家裡喝醉酒睡著了。") {
+        A();
+   }
+   if (sentences[currentIndex] == "Zzz……") {
+        C();
+   }
+   if (
+      sentences[currentIndex - 1] == "（不久後眾人搭乘直升機離去）" &&
+      sentences[currentIndex] == "（直升機上）"
+    ) {
+      backgroundImageElement.style.transform = 'translateX(-100%)';
+      setTimeout(function () {
+        backgroundImageElement.src = '直升機.jpg';
+        backgroundImageElement.style.transform = 'translateX(0%)';
+      }, 500);
+    }
+}
+else{
+    window.location.href = '封底.html';
+}
+  }
+  document.getElementById('introduction').addEventListener('click', function() {
+      var characterIntroductionWindow = window.open('人物介紹(無紐).html', '_blank', 'width=600,height=400');
+      if (characterIntroductionWindow) {
+        characterIntroductionWindow.moveTo(
+          (window.screen.width - characterIntroductionWindow.outerWidth) / 2,
+          (window.screen.height - characterIntroductionWindow.outerHeight) / 2
+        );
+      }
+    });
+    var isMusicPlaying = false;
+  const audio = document.getElementById('audio');
+  function toggleMusic() {
+    if (isMusicPlaying) {
+      audio.pause();
+    } else {
+      audio.play();
+    }
+    isMusicPlaying = !isMusicPlaying;
+  }
+  document.getElementById('playButton').addEventListener('click', function () {
+    toggleMusic();
+  });
+  audio.addEventListener('ended', function () {
+    isMusicPlaying = false;
+    audio.play(); 
+  });
+</script>
+</body>
+</html>

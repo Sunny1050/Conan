@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>選擇題網頁</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #quiz-container {
+            max-width: 800px; /* 調整最大寬度以容納圖片 */
+            margin: auto;
+        }
+        #task-container {
+            float: left;
+            width: 60%; /* 調整左側容器的寬度 */
+        }
+        #image-container {
+            float: right;
+            width: 40%;
+            margin-top: 20px;
+            
+        }
+        .question {
+            margin-bottom: 10px;
+        }
+        .options {
+            list-style-type: none;
+            padding: 0;
+        }
+        .option {
+            margin-bottom: 5px;
+        }
+        #submit-btn {
+            margin-top: 10px;
+            padding: 8px 16px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        img {
+            max-width: 100%; /* 使圖片能夠根據容器大小進行縮放 */
+            height: auto; /* 保持圖片的原始高寬比例 */
+            display: block; /* 清除圖片下方的空隙 */
+            margin: auto;
+            margin-top: 20px;  /* 讓圖片在其容器中居中 */
+        }
+    </style>
+</head>
+<body>
+
+<div id="quiz-container">
+    <div id="task-container">
+        <h1>任務(第一階段)</h1>
+        <div>請回答下列問題:</div>
+        <div class="question" id="question1">
+            <p>1. 請問是誰殺害大上助善？</p>
+            <ul class="options">
+                <li class="option"><input type="radio" name="q1" value="a"> 貓哥</li>
+                <li class="option"><input type="radio" name="q1" value="b"> 女僕</li>
+                <li class="option"><input type="radio" name="q1" value="c"> 暗示透</li>
+                <li class="option"><input type="radio" name="q1" value="d"> 白馬王子探</li>
+            </ul>
+        </div>
+
+        <div class="question" id="question2">
+            <p>2. 請問為什麼要殺害大上助善？</p>
+            <ul class="options">
+                <li class="option"><input type="radio" name="q2" value="a"> 情殺</li>
+                <li class="option"><input type="radio" name="q2" value="b"> 仇殺</li>
+                <li class="option"><input type="radio" name="q2" value="c"> 受人指使</li>
+            </ul>
+        </div>
+        <div class="question" id="question3">
+            <p>3. 發送邀請函的人是？</p>
+            <ul class="options">
+                <li class="option"><input type="radio" name="q3" value="a"> 苦愛酒</li>
+                <li class="option"><input type="radio" name="q3" value="b"> 大上助善</li>
+                <li class="option"><input type="radio" name="q3" value="c">怪盜積德 </li>
+            </ul>
+        </div>
+
+        <button id="submit-btn" onclick="checkAnswers()">提交答案</button>
+    </div>
+
+    <div id="image-container">
+        <img src="工藤新一2.png" alt="Image description">
+    </div>
+</div>
+
+<script>
+    function checkAnswers() {
+        var answers = {
+            q1: 'b', // 正確答案是 B
+            q2: 'c',
+            q3:'b'  // 正確答案是 C
+        };
+
+        for (var questionId in answers) {
+            var selectedOption = document.querySelector('input[name="' + questionId + '"]:checked');
+            if (selectedOption) {
+                var userAnswer = selectedOption.value;
+                var correctAnswer = answers[questionId];
+
+                var resultMessage = (userAnswer === correctAnswer) ? '回答正確！' : '回答錯誤。正確答案是：' + correctAnswer;
+                alert('問題 ' + questionId.charAt(1) + ': ' + resultMessage);
+            } else {
+                alert('請回答所有問題！');
+                return;
+            }
+        }
+        alert('恭喜你破解了凶殺案');
+        window.location.href = "劇情2.html";
+    }
+</script>
+
+</body>
+</html>

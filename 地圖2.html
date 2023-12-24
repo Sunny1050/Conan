@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Map</title>
+    <style>
+        #map {
+            position: relative;
+        }
+
+        .room-image {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .room-button {
+            position: absolute;
+            cursor: pointer;
+        }
+
+        #roomAButton {
+            top: 300px;
+            left: 150px;
+        }
+
+        #roomBButton {
+            top: 150px;
+            left: 250px;
+        }
+
+        #roomCButton {
+            top: 130px;
+            left: 150px;
+        }
+        #roomDButton{
+            top: 150px;
+            left: 460px;
+        }
+        #roomEButton{
+            top: 200px;
+            left: 650px;
+        }
+        #roomFButton{
+            top: 300px;
+            left: 500px;
+        }
+        #searchA {
+            position: absolute;
+            top: 500px;
+            width: 102px;
+            height: 100px;
+        }
+        #searchB {
+            position: absolute;
+            top: 500px;
+            width: 102px;
+            height: 100px;
+        }
+        #searchC {
+            position: absolute;
+            top: 500px;
+            width: 102px;
+            height: 100px;
+        }
+        #searchD {
+            position: absolute;
+            top: 500px;
+            width: 102px;
+            height: 100px;
+        }
+        #searchE {
+            position: absolute;
+            top: 500px;
+            width: 102px;
+            height: 100px;
+        }
+        #searchF {
+            position: absolute;
+            top: 500px;
+            width: 102px;
+            height: 100px;
+        }
+    
+
+
+    #role {
+      width: 230px;
+      height: 230px;
+      margin: auto;
+      position: absolute;
+      top: 35%;
+      left: 10%;
+      z-index: 2;
+      display: none;
+    }
+
+    #dialog {
+      width: 400px;
+      height: 200px;
+      margin: auto;
+      position: absolute;
+      top: 63%;
+      left: 10%;
+      z-index: 1;
+      display: none;
+    }
+
+    #dialog p {
+      position: absolute;
+      top: 28px;
+      left: 35px;
+      color: white;
+      width: 118%;
+      font-size: 1.1em;
+    }
+
+    </style>
+</head>
+<body>
+<div id="map">
+    <img src="黃昏別館.jpeg" alt="Map"  width="771" height="588">
+
+    <div id="roomA" class="room-image">
+        <img src="前廳.jpg" alt="前廳" width="771" height="588">
+        <img id="searchA" src="放大鏡.jpg" onclick="">
+    </div>
+
+    <div id="roomB" class="room-image">
+        <img src="閣樓.jpg" alt="Room B" width="771" height="588">
+        <img id="searchB" src="放大鏡.jpg" onclick="">
+    </div>
+
+    <div id="roomC" class="room-image">
+        <img src="走廊.jpg" alt="Room C" width="771" height="588">
+        <img id="searchC" src="放大鏡.jpg" onclick="">
+        
+    </div>
+    <div id="roomD" class="room-image">
+        <img src="會客廳.jpg" alt="Room C" width="771" height="588">
+        <img id="searchD" src="放大鏡.jpg" onclick="">
+    </div>
+    <div id="roomE" class="room-image">
+        <img src="廚房.jpg" alt="Room C" width="771" height="588">
+        <img id="searchE" src="放大鏡.jpg" onclick="">
+    </div>
+    <div id="roomF" class="room-image">
+        <img src="餐廳.jpg" alt="Room C" width="771" height="588">
+        <img id="searchF" src="放大鏡.jpg" onclick="">
+    </div>
+    
+    <button id="roomAButton" class="room-button" onclick="showRoom('roomA')">前廳</button>
+    <button id="roomBButton" class="room-button" onclick="showRoom('roomB')">閣樓</button>
+    <button id="roomCButton" class="room-button" onclick="showRoom('roomC')">走廊</button>
+    <button id="roomDButton" class="room-button" onclick="showRoom('roomD')">會客廳</button>
+    <button id="roomEButton" class="room-button" onclick="showRoom('roomE')">廚房</button>
+    <button id="roomFButton" class="room-button" onclick="showRoom('roomF')">餐廳</button>
+
+    <div id="dialog" onclick="nextSentence()" >
+        <img src="對話框.png" alt="對話框">
+        <p id="sentence">點擊對話框開始對話：</p>
+      </div>
+      <img id="role" src="滾筒洗衣機.png" alt="Role" >
+</div>
+
+<script>
+  
+  var currentIndex = -1;
+  var sentenceElement = document.getElementById('sentence');
+  var roleImageElement = document.getElementById('role');
+  var dialogElement = document.getElementById('dialog');
+  var sentences="";
+
+  function secondtime(){
+    alert('這裡的似乎沒有其他的東西了，去其他的地方看看吧！');
+        window.location.href = '第二輪搜查.html';
+  }
+  function K(){
+    roleImageElement.src = '無.jpg';
+    roleImageElement.style.width = '1px';
+    roleImageElement.style.height = '1px';
+    }
+    function nothing(){
+        alert('這裡的似乎沒有其他的東西了，去其他的地方看看吧！');
+        window.location.href = '第二輪搜查.html';
+    }
+    
+  function nextSentence() {
+  if (currentIndex < sentences.length - 1) {
+    currentIndex++;
+    sentenceElement.innerText = sentences[currentIndex];
+    if (sentences[currentIndex] == "唉啊，被當成可疑人物了嗎？"||sentences[currentIndex] == "但請不用擔心，我和你一樣，是想要緊緊咬住那些家伙的獵犬。（冷笑）") {
+      roleImageElement.src = '貓哥.png';
+    roleImageElement.style.width = '190px';
+    roleImageElement.style.height = '200px';
+    }
+    if (sentences[currentIndex] == "我曾經在酒廠當過臥底，後來身份暴露假死脫身，所以現在以貓哥的身份活動。") {
+        roleImageElement.src = '阿卡依.png';
+        roleImageElement.style.width = '190px';
+        roleImageElement.style.height = '200px';
+    }
+    if (sentences[currentIndex] == "我早就知道邀請函不是怪盜積德所為。") {
+      roleImageElement.src = '白馬王子探.png';
+      roleImageElement.style.width = '200px';
+      roleImageElement.style.height = '200px';
+    }
+    if (sentences[currentIndex] == "我說滾筒啊，毛利大叔是右撇子沒錯吧？") {
+      roleImageElement.src = '腹部平刺.png';
+      roleImageElement.style.width = '190px';
+      roleImageElement.style.height = '200px';
+    }
+  }
+  else{
+        alert('對話結束了，去其他的地方看看吧！');
+        window.location.href = '第二輪搜查.html';
+  }
+}
+
+    function Investigation1(evidenceName3) {
+        if(evidenceName3=='日記紙（走廊）'){
+            alert('你發現了幾張' + evidenceName3 + '。');
+        }
+        else if(evidenceName3=='血跡（前廳）'){
+            alert('你發現了一地' + evidenceName3 + '。');
+        }
+        else{
+        alert('你發現了一個' + evidenceName3 + '。');
+        }
+        var Description3="";
+        if(evidenceName3=='日記紙（走廊）'){
+            Description3="在壁畫後面發現的幾張日記紙，上面寫著：“我感覺事情愈來愈不對勁，跟我一起被酒廠老闆請來的幾個<br>密碼學家都被限制了行動……”、“不對、不對！如果再解不出來的話……！”、“快逃！”等內容。"
+        }
+        if(evidenceName3=='血跡（前廳）'){
+            Description3="經過魯米諾試劑的測試後，發現這裡四處都沾附著血跡，且應該是數量不少的人留下的。"
+        }
+        if(evidenceName3=='鐘（閣樓）'){
+            Description3="一座巨大的古老時鐘，不過時針已經停止運轉。在右側的角落發現背面刻著123698741 12369這串數字。"
+        }
+        // 這裡可以將找到的物證加入到 localStorage 中，以便在 evidence.html 中顯示
+        var foundEvidence3 = {
+            name3: evidenceName3,
+            description3: Description3
+        };
+
+        // 將找到的物證存儲到 localStorage 中
+        var foundEvidenceList3 = JSON.parse(localStorage.getItem('foundEvidenceList3')) || [];
+        foundEvidenceList3.push(foundEvidence3);
+        localStorage.setItem('foundEvidenceList3', JSON.stringify(foundEvidenceList3));
+    }
+
+    function Investigation2(evidenceName4) {
+        var AnsDialog = prompt('你發現了' + evidenceName4 + '，你選擇……？\n（1）上前攀談（2）轉身離開\n（請輸入1或2）');
+        var Description4="";
+       if(AnsDialog==1){
+        dialogElement.style.display='block';
+        roleImageElement.style.display='block';
+        K();
+        if(evidenceName4=='貓哥'){
+            sentences = [
+            "唉啊，被當成可疑人物了嗎？",
+            "好吧，事到如今也不用再隱瞞下去了，我是FBI搜查官阿卡依。（摘下易容）",
+            "我曾經在酒廠當過臥底，後來身份暴露假死脫身，所以現在以貓哥的身份活動。",
+            "黃昏別館當年的案件存在很多疑點，說是拍賣會，但當年失蹤的幾乎都是密碼學家、歷史學家、文字學家及偵探等人，而不是傳言中的富商貴婦之流。",
+            "我們追查之後懷疑跟酒廠有關，再加上有情報指出酒廠在這裡有新的行動，所以派我過來探查。",
+            "但苦愛酒以前見過我的臉，所以我現在還不能暴露身份。（再次戴上易容）",
+            "但請不用擔心，我和你一樣，是想要緊緊咬住那些家伙的獵犬。（冷笑）",
+        ]
+            Description4="1.貓哥的真實身分是FBI的搜察官。<br>2.四十年前的案件似乎有諸多疑點。<br>3.當年在黃昏別館失蹤的都是密碼學家、歷史學家、文字學家及偵探等人。"
+        }
+        if(evidenceName4=='白馬王子探'){
+            sentences = [
+            "我早就知道邀請函不是怪盜積德所為。",
+            "我來不過是想參觀傳聞中的慘案現場，順便看看到底是誰在搞鬼。",
+            "話雖如此，我認為能在這裡逮到那傢伙的機率也是很大的，他可不是什麼能夠容忍別人盜用名號的人啊。（感嘆）",
+            "當然了，畢竟是宿敵，總是要比別人多幾分了解。（笑）",
+        ]
+            Description4="1.白馬王子探與怪盜積德是宿敵。<br>2.他認為怪盜積德出現在這裡的機率很大。"
+       }
+       if(evidenceName4=='腹部平刺'){
+            sentences = [
+            "我說滾筒啊，毛利大叔是右撇子沒錯吧？",
+            "這就奇怪了，他今天在倒酒的時候用的是左手誒。",
+            "等一下…難不成……？（思索）",
+            "（笑了一聲）這下事情可有趣了～",
+        ]
+            Description4="1.毛利小五狼在倒酒的時候用的是左手。<br>2.腹部平刺好像想通了什麼。"
+       }
+    
+        // 這裡可以將找到的物證加入到 localStorage 中，以便在 evidence.html 中顯示
+        var foundEvidence4 = {
+            name4: evidenceName4,
+            description4: Description4
+        };
+
+        // 將找到的物證存儲到 localStorage 中
+        var foundEvidenceList4 = JSON.parse(localStorage.getItem('foundEvidenceList4')) || [];
+        foundEvidenceList4.push(foundEvidence4);
+        localStorage.setItem('foundEvidenceList4', JSON.stringify(foundEvidenceList4));
+    }
+    else{
+        window.location.href = '第二輪搜查.html';
+    }
+}
+
+    function showRoom(roomId) {
+        var roomImages = document.getElementsByClassName('room-image');
+        for (var i = 0; i < roomImages.length; i++) {
+            roomImages[i].style.display = 'none';
+        }
+
+        var roomToShow = document.getElementById(roomId);
+        if (roomToShow) {
+            roomToShow.style.display = 'block';
+
+            // 隱藏所有按鈕
+            var roomButtons = document.getElementsByClassName('room-button');
+            for (var j = 0; j < roomButtons.length; j++) {
+                roomButtons[j].style.display = 'none';
+            }
+        }
+    }
+
+  // 初始化每個房間的點擊次數計數器
+  var roomAClickCount2 = localStorage.getItem('roomAClickCount2') || 0;
+  var roomBClickCount2 = localStorage.getItem('roomBClickCount2') || 0;
+  var roomCClickCount2 = localStorage.getItem('roomCClickCount2') || 0;
+  var roomDClickCount2 = localStorage.getItem('roomDClickCount2') || 0;
+  var roomEClickCount2 = localStorage.getItem('roomEClickCount2') || 0;
+  var roomFClickCount2 = localStorage.getItem('roomFClickCount2') || 0;
+
+  function handleRoomAClick() {
+    if (roomAClickCount2 === 0) {
+      Investigation1('血跡（前廳）');
+      nothing();
+    } else {
+      secondtime();
+    }
+
+    roomAClickCount2++;
+    localStorage.setItem('roomAClickCount2', roomAClickCount2);
+  }
+
+  function handleRoomBClick() {
+    if (roomBClickCount2 === 0) {
+      Investigation1('鐘（閣樓）');
+      nothing();
+    } else {
+      secondtime();
+    }
+
+    roomBClickCount2++;
+    localStorage.setItem('roomBClickCount2', roomBClickCount2);
+  }
+
+  function handleRoomCClick() {
+    if (roomCClickCount2 === 0) {
+      Investigation1('日記紙（走廊）');
+      nothing();
+    } else {
+      secondtime();
+    }
+
+    roomCClickCount2++;
+    localStorage.setItem('roomCClickCount2', roomCClickCount2);
+  }
+
+  function handleRoomDClick() {
+    if (roomDClickCount2 === 0) {
+      Investigation2('白馬王子探');
+    } else {
+      secondtime();
+    }
+
+    roomDClickCount2++;
+    localStorage.setItem('roomDClickCount2', roomDClickCount2);
+  }
+
+  function handleRoomEClick() {
+    if (roomEClickCount2 === 0) {
+      Investigation2('腹部平刺');
+    } else {
+      secondtime();
+    }
+
+    roomEClickCount2++;
+    localStorage.setItem('roomEClickCount2', roomEClickCount2);
+  }
+
+  function handleRoomFClick() {
+    if (roomFClickCount2 === 0) {
+      Investigation2('貓哥');
+    } else {
+      secondtime();
+    }
+
+    roomFClickCount2++;
+    localStorage.setItem('roomFClickCount2', roomFClickCount2);
+  }
+
+  // 修改點擊事件處理函數
+  document.getElementById('searchA').addEventListener('click', handleRoomAClick);
+  document.getElementById('searchB').addEventListener('click', handleRoomBClick);
+  document.getElementById('searchC').addEventListener('click', handleRoomCClick);
+  document.getElementById('searchD').addEventListener('click', handleRoomDClick);
+  document.getElementById('searchE').addEventListener('click', handleRoomEClick);
+  document.getElementById('searchF').addEventListener('click', handleRoomFClick);
+   
+</script>
+
+</body>
+</html>

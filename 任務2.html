@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>選擇題網頁</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        #quiz-container {
+            max-width: 800px;
+            margin: auto;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        #task-container {
+            float: left;
+            width: 60%;
+            padding: 20px;
+        }
+        #image-container {
+            float: right;
+            width: 40%;
+            overflow: hidden;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .options {
+            list-style-type: none;
+            padding: 0;
+        }
+        .option {
+            margin-bottom: 10px;
+            background-color: #e6e6e6;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .option:hover {
+            background-color: #d4d4d4;
+        }
+        #submit-btn {
+            margin-top: 20px;
+            padding: 12px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        #submit-btn:hover {
+            background-color: #45a049;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: auto;
+            border-radius: 8px;
+        }
+        .card{
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+
+<div id="quiz-container">
+    <div id="task-container">
+        <h1 style="color: #333;">任務(第二階段)</h1>
+        <div style="color: #555;">請回答下列問題:</div>
+
+        <div class="question" id="question1">
+            <p>1. 謎語？(123698741 12369)</p>
+            <div class="card"> 
+                <div>
+                 <img src="塔羅牌.jpg" width="200px"height="200px">
+                </div>
+            <div>
+                 <img src="塔羅牌(反).jpg" width="215px"height="215px">
+            </div>
+            </div>
+            <ul class="options">
+                <li class="option"><input type="radio" name="q1" value="a"> 08:13 </li>
+                <li class="option"><input type="radio" name="q1" value="b"> 07:13 </li>
+                <li class="option"><input type="radio" name="q1" value="c"> 11:08 </li>
+                <li class="option"><input type="radio" name="q1" value="d"> 06:13  </li>
+                <li class="option"><input type="radio" name="q1" value="e"> 07:12 </li>
+                <li class="option"><input type="radio" name="q1" value="f"> 07:10</li>
+                <li class="option"><input type="radio" name="q1" value="g"> 08:12</li>
+            </ul>
+        </div>
+
+        <div class="question" id="question2">
+            <p>2. 請問40年前的真相？</p>
+            <ul class="options">
+                <li class="option"><input type="radio" name="q2" value="a"> 酒廠老闆聘請專家幫忙破解寶藏線索，卻無人破解，最後為了保密殺人滅口。</li>
+                <li class="option"><input type="radio" name="q2" value="b"> 酒廠老闆自己舉辦了拍賣會，故意請了兩個歹徒扮演登山客攪局，從而名正言順拿回財產。</li>
+                <li class="option"><input type="radio" name="q2" value="c"> 酒廠老闆聘請專家幫忙破解寶藏線索，最後大家為了寶藏自相殘殺。</li>
+                <li class="option"><input type="radio" name="q2" value="d"> 酒廠老闆什麼都不知道，他無辜可憐清純不做作，跟外面那些妖艷賤貨不一樣。</li>
+            </ul>
+        </div>
+
+        <div class="question" id="question3">
+            <p>3. 積德易容成了誰？</p>
+            <ul class="options">
+                <li class="option"><input type="radio" name="q3" value="a"> 白馬王子探</li>
+                <li class="option"><input type="radio" name="q3" value="b"> 毛利小五狼 </li>
+                <li class="option"><input type="radio" name="q3" value="c"> 暗示透</li>
+                <li class="option"><input type="radio" name="q3" value="d"> 腹部平刺</li>
+            </ul>
+        </div>
+
+        <button id="submit-btn" onclick="checkAnswers()">提交答案</button>
+    </div>
+
+   <div id="image-container">
+        <img src="工藤新一2.png" alt="Image description">
+    </div>
+</div>
+
+<script>
+    function checkAnswers() {
+        var answers = {
+            q1: 'b',
+            q2: 'a',
+            q3: 'b'
+        };
+
+        for (var questionId in answers) {
+            var selectedOption = document.querySelector('input[name="' + questionId + '"]:checked');
+            if (selectedOption) {
+                var userAnswer = selectedOption.value;
+                var correctAnswer = answers[questionId];
+
+                var resultMessage = (userAnswer === correctAnswer) ? '回答正確！' : '回答錯誤。正確答案是：' + correctAnswer;
+                alert('問題 ' + questionId.charAt(1) + ': ' + resultMessage);
+            } else {
+                alert('請回答所有問題！');
+                return;
+            }
+        }
+        alert('恭喜你完成了所有任務');
+        window.location.href = "劇情3.html";
+    }
+</script>
+
+</body>
+</html>

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +10,6 @@
       height: 588px;
       overflow: hidden;
     }
-
     #background-image {
       position: absolute;
       top: 0;
@@ -21,7 +19,6 @@
       z-index: -1;
       transition: transform 1s ease-in-out;
     }
-
     .content {
       position: absolute;
       top: 0;
@@ -30,7 +27,6 @@
       height: 100%;
       transition: transform 1s ease-in-out;
     }
-
     #role {
       width: 230px;
       height: 230px;
@@ -40,7 +36,6 @@
       left: 10%;
       z-index: 2;
     }
-
     #dialog {
       width: 400px;
       height: 200px;
@@ -50,7 +45,6 @@
       left: 10%;
       z-index: 1;
     }
-
     #dialog p {
       position: absolute;
       top: 28px;
@@ -59,9 +53,29 @@
       width: 118%;
       font-size: 1.1em;
     }
+    .button-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+    }
+    .button {
+      display: inline-block;
+      background-color:darkblue;
+      color: white;
+      border: none;
+      padding: 5px 5px;
+      text-align: center;
+      text-decoration: none;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 10px;
+      transition: background-color 0.3s ease;
+    }
+    .button:hover {
+      background-color: #2980b9;
+    }
   </style>
 </head>
-
 <body>
   <div class="transition-container">
     <img id="background-image" src="工藤宅.jpg" alt="背景图">
@@ -71,8 +85,14 @@
     </div>
     <img id="role" src="滾筒洗衣機.png" alt="Role" >
   </div>
+  <div class="button-container">
+    <button id="introduction" class="button">人物介紹</button>
+    <button id="playButton"class="button">播放背景音樂</button>
+    <audio id="audio" src="音樂.MP3"></audio>
+  </div>
+</body>
+</html>
   <script>
-
   var sentences = [
   "大家好，我是高中生蒸蛋滾筒洗衣機",
   "某天和青梅竹馬兼同學的角蘭受邀參加一場晚宴",
@@ -92,7 +112,7 @@
   "是的，某天我放學回家後，便在桌上發現了這個。（拿出一個黑色信封）",
   "（接過信封，拆開）",
   " 在下仰慕閣下的睿智，特地去函邀請閣下到府晚餐小酌……最後附上了黃昏別館的地址。",
-  " 落款，怪盜基德？",
+  " 落款，怪盜積德？",
   "沒錯，在我家的書房桌上也莫名其妙的出現了這個信封。",
   "因為想弄清楚怪盜基德到底在搞什麼鬼，剛好聽說小五狼叔叔也接到了邀請，乾脆就一起來了。",
   "原來是這樣啊，我了解了。",
@@ -148,7 +168,7 @@
 "（一臉疑惑）",
 "悲劇？",
 "看來這棟別墅還發生過什麼有趣的故事啊。（眼鏡閃過一道光）",
-"據說40年前這座別館曾召集了政經界的名流在此開秘密會議，表面上是為了追思以99歲辭世的酒廠老闆，實際上則是針對酒廠老闆生前收藏美術品的拍賣會。",
+"據說40年前這座別館曾召集了政經界的名流在此開秘密會議，表面上是為了追思以99歲辭世的大富豪，實際上則是針對大富豪生前收藏美術品的拍賣會。",
 "拍賣會進行到一半時，來了兩個男人，他們聲稱自己因為暴風雨迷失了方向，希望主辦人收留他們。",
 "原本主辦人拒絕了他們，但那兩個男人從口袋中拿出了一個類似香菸的東西，主辦人吸了幾口之後，不知為何的改變了心意，館中其他賓客也接受了他們的蠱惑，整個館中瀰漫著菸味。",
 "那個菸該不會是……",
@@ -194,7 +214,6 @@
 "可惡！這傢伙根本就在耍我們。",
 "好了，這場遊戲已經正式展開，各位可以開始行動了。",
 ];
-
   var currentIndex = -1;
   var sentenceElement = document.getElementById('sentence');
   var backgroundImageElement = document.getElementById('background-image');
@@ -258,15 +277,20 @@ function I(){
     roleImageElement.style.height = '200px';
 }
 function J(){
-    
+    roleImageElement.src = '神秘人.png';
+    roleImageElement.style.width = '190px';
+    roleImageElement.style.height = '200px';
 }
 function K(){
     roleImageElement.src = '無.jpg';
     roleImageElement.style.width = '1px';
     roleImageElement.style.height = '1px';
 }
-
-
+function L(){
+    roleImageElement.src = '假人.png';
+    roleImageElement.style.width = '190px';
+    roleImageElement.style.height = '200px';
+}
   function nextSentence() {
   if (currentIndex < sentences.length - 1) {
     currentIndex++;
@@ -442,7 +466,7 @@ function K(){
     if (sentences[currentIndex] == "看來這棟別墅還發生過什麼有趣的故事啊。（眼鏡閃過一道光）") {
         D();
     }
-    if (sentences[currentIndex] == "據說40年前這座別館曾召集了政經界的名流在此開秘密會議，表面上是為了追思以99歲辭世的酒廠老闆，實際上則是針對酒廠老闆生前收藏美術品的拍賣會。") {
+    if (sentences[currentIndex] == "據說40年前這座別館曾召集了政經界的名流在此開秘密會議，表面上是為了追思以99歲辭世的大富豪，實際上則是針對大富豪生前收藏美術品的拍賣會。") {
         G();
     }
     if (sentences[currentIndex] == "那個菸該不會是……") {
@@ -554,10 +578,8 @@ function K(){
         E();
     }
     if(currentIndex==118){
-        J();
+        L();
     }
-    
-
     if (
       sentences[currentIndex - 1] == "事情要從那時說起------" &&
       sentences[currentIndex] == "這是一個下著大雨的夜晚，一台白色的豐田在蜿蜒的山路上呼嘯而過。"
@@ -617,14 +639,40 @@ function K(){
         backgroundImageElement.src = '餐廳.jpg';
         backgroundImageElement.style.transform = 'translateX(0%)';
       }, 500);
+     window.open("抽牌.html");
     }
     }
     else {
-    alert("對話結束！");
+    alert("對話結束！開始搜查囉！！");
+    window.location.href = '第一輪搜查.html';
   }
 }
+document.getElementById('introduction').addEventListener('click', function() {
+      var characterIntroductionWindow = window.open('人物介紹(無紐).html');
+      if (characterIntroductionWindow) {
+        characterIntroductionWindow.moveTo(
+          (window.screen.width - characterIntroductionWindow.outerWidth) / 2,
+          (window.screen.height - characterIntroductionWindow.outerHeight) / 2
+        );
+      }
+    });
+    var isMusicPlaying = false;
+  const audio = document.getElementById('audio');
+  function toggleMusic() {
+    if (isMusicPlaying) {
+      audio.pause();
+    } else {
+      audio.play();
+    }
+    isMusicPlaying = !isMusicPlaying;
+  }
+  document.getElementById('playButton').addEventListener('click', function () {
+    toggleMusic();
+  });
+  audio.addEventListener('ended', function () {
+    isMusicPlaying = false;
+    audio.play(); 
+  });
 </script>
-
 </body>
-
 </html>

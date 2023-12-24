@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>第二輪搜查</title>
+    <style>
+        .p {
+            display: flex;
+        }
+        .button {
+            display: block;
+            margin-bottom: 10px;
+            top: 0px;
+            cursor: pointer; 
+        }
+        img {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="p">
+        <div>
+            <img src="黃昏別館.jpeg" width="771" height="588">
+        </div>
+        <div>
+            <button id="instructions" class="button">使用說明</button>
+            <button id="introduction" class="button">人物介紹</button>
+            <button id="map" class="button">地圖</button>
+            <button id="thing" class="button">證物</button>
+            <button id="testimony" class="button">證詞</button>
+            <button id="task" class="button">任務</button>
+            
+        </div>
+    </div>
+    <script>
+        document.getElementById('introduction').addEventListener('click', function() {
+            window.location.href = '人物介紹.html';
+        });
+        document.getElementById("map").addEventListener("click",function(){
+            window.location.href="地圖2.html";
+        });
+        document.getElementById("thing").addEventListener("click",function(){
+            window.location.href="物證2.html";
+        });
+        document.getElementById("instructions").addEventListener("click",function(){
+            window.location.href="使用說明.html"
+        });
+        document.getElementById("testimony").addEventListener("click",function(){
+            window.location.href="conversation2.html"
+        });
+        document.getElementById("task").addEventListener("click",function(){
+            window.location.href="任務2.html"
+        });
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>抽牌</title>
+    <style type="text/CSS">
+        @import url(https://fonts.googleapis.com/earlyaccess/cwtexkai.css);
+        .img {
+            display: block;
+            margin: auto;
+        }
+        .table {
+            font-family:Verdana, Geneva, Tahoma, sans-serif;
+            color:midnightblue;
+            
+        }
+       
+        h1 {
+            color:midnightblue;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-weight: bold;
+            font-size: 24px;
+
+        }
+        .container {
+            display: flex;
+        }
+        th {
+            background-color: #3498db;
+            color: #fff;
+        }
+        th:hover{
+            background-color: #2980b9;
+        }
+        button {
+            display: block;
+            margin: 20px auto;
+            background-color: #3498db;
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">  
+        <div>
+        <h1>選擇座位</h1> 
+      <button id="pick" class="button">抽牌</button>
+        </div> 
+        <div id="card"> 
+        </div>
+        <div>
+            <table border="1" width="200%" class="table">
+                <thead>
+                    <tr>
+                        <th>人物</th>
+                        <th class="seatnum">座位號碼</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>滾筒洗衣機<img class="img" src="工藤新一.png" width="122.625" height="102.825"></th>
+                        <th id="result1"></th>
+                    </tr>
+                    <tr>
+                        <th>角蘭<img class="img" src="毛利蘭.png" width="151.8" height="127.6"></th>
+
+                        <th id="result2"class="seat"></th>
+                    </tr>
+                    <tr>
+                        <th>毛利小五狼<img class="img" src="毛利小五郎.png" width="120" height="120"></th>
+
+                        <th id="result3"class="seat"></th>
+                    </tr>
+                    <tr>
+                        <th>腹部平刺 <img class="img" src="服不平次.png" width="96.3" height="130.95"></th>
+
+                        <th id="result4"class="seat"></th>
+                    </tr>
+                    <tr>
+                        <th>暗示透 <img class="img" src="安是透.png" width="96.3" height="130.95"></th>
+                        <th id="result5"class="seat"></th>
+                    </tr>
+                    <tr>
+                        <th>貓哥 <img class="img" src="貓哥(圖).jpg" width="150" height="130.95"></th>
+                        <th id="result6"class="seat"></th>
+                    </tr>
+                    <tr>
+                        <th>白馬王子探   <img class="img" src="白馬.png" width="96.3" height="130.95"></th>
+                        <th id="result7"class="seat"></th>
+                    </tr>
+                    <tr>
+                        <th>大上助善 <img class="img" src="大上.png" width="120" height="150"></th>
+                        <th id="result8"class="seat"></th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+<script>
+var button = document.getElementById("pick");
+button.addEventListener("click", drawCard, false);
+var drawnCards = [];
+const images = ["1.png", "2.png", "3.png", "4.png", "5.png", "6.png", "7.png","8.png"];
+var currentPersonIndex = 0;
+function drawCard() {
+    var card = document.getElementById("card");
+    var availableCards = images.filter(function(card, index) {
+        return drawnCards.indexOf(index) === -1;
+    });
+    if (availableCards.length === 0) {
+        alert("全部人已入座，關閉回到對話");
+        return;
+    }
+    var randomIndex = Math.floor(Math.random() * availableCards.length);
+    var selectedCardIndex = images.indexOf(availableCards[randomIndex]);
+    card.innerHTML = `<img src="${availableCards[randomIndex]}">`;
+    displayResult(currentPersonIndex, selectedCardIndex);
+    drawnCards.push(selectedCardIndex);
+    currentPersonIndex++;
+    if (currentPersonIndex >= images.length) {
+        currentPersonIndex = 0;
+    }
+}
+function displayResult(personIndex, cardIndex) {
+    var resultElement = document.getElementById("result" + (personIndex + 1));
+    resultElement.textContent = "抽到了" + (cardIndex + 1) + "號位置";
+}
+</script>
+</body>
+</html>

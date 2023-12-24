@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    .transition-container {
+      position: relative;
+      width: 771px;
+      height: 588px;
+      overflow: hidden;
+    }
+    #background-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      transition: transform 1s ease-in-out;
+    }
+    .content {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      transition: transform 1s ease-in-out;
+    }
+    #role {
+      width: 230px;
+      height: 230px;
+      margin: auto;
+      position: absolute;
+      top: 35%;
+      left: 10%;
+      z-index: 2;
+    }
+    #dialog {
+      width: 400px;
+      height: 200px;
+      margin: auto;
+      position: absolute;
+      top: 63%;
+      left: 10%;
+      z-index: 1;
+    }
+    #dialog p {
+      position: absolute;
+      top: 28px;
+      left: 35px;
+      color: white;
+      width: 118%;
+      font-size: 1.1em;
+    }
+    .button-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+    }
+    .button {
+      display: inline-block;
+      background-color:darkblue;
+      color: white;
+      border: none;
+      padding: 5px 5px;
+      text-align: center;
+      text-decoration: none;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 10px;
+      transition: background-color 0.3s ease;
+    }
+    .button:hover {
+      background-color: #2980b9;
+    }
+  </style>
+</head>
+<body>
+  <div class="transition-container">
+    <img id="background-image" src="會客廳.jpg" alt="背景图">
+    <div id="dialog" onclick="nextSentence()">
+      <img src="對話框.png" alt="對話框">
+      <p id="sentence">點擊對話框開始對話：</p>
+    </div>
+    <img id="role" src="滾筒洗衣機.png" alt="Role" >
+  </div>
+  <div class="button-container">
+    <button id="introduction" class="button">人物介紹</button>
+    <button id="playButton"class="button">播放背景音樂</button>
+    <audio id="audio" src="音樂(第二階段).mp3"></audio>
+  </div>
+</body>
+  <script>
+
+  var sentences = 
+  ["好了，小鬼，把我們全部人都召集到這裡到底要做什麼？",
+    "我已經破解了犯人所使用的手法，而犯人，就在我們之中！",
+    "什麼！？（震驚的摀住嘴）",
+    "這麼簡單的手法，真以為我們看不出來啊？（白眼）",
+    "竟然敢在這麼多名偵探面前犯案，真不知該說兇手過於大膽還是過於愚蠢。",
+    "首先，犯人在我們每個人所使用的茶杯的杯柄上事先塗上氰化鉀。",
+    "然後，當用完餐後的大上先生想抽菸，於是從煙盒中拿取一根菸時，他的拇指跟食指便會碰觸到香菸的濾嘴，於是就這麼把毒物送入口中。",
+    "因為是在每個杯子上都做了手腳，所以就算換了位置，也依舊無濟於事。",
+    "而其他人，只要不用手碰觸到入口的食物，就不會受到影響。當然，我想兇手也完全不會在意有人不小心因此受害，例如，萬一毛利先生今天也抽了煙的話，現在地上應該就有兩個人了。",
+    "那…那還真是好險啊……（冷汗）",
+    "因此能做到這件事的，只有去過廚房的毛利先生、貓先生、已經成為一具屍體的大上先生，還有，一直待在廚房的女僕小姐了。",
+    "當然，撇除掉大上先生想自我了斷的這種情況，嫌疑人就只剩毛利先生、貓先生、女僕小姐了。",
+    "再考慮到貓先生只在廚房待了一下子就走了，毛利先生只停留在酒櫃附近，並沒有靠近餐具的區域。因此，兇手就是妳（手指向女僕），女僕小姐！",
+    "什麼…！？（慌張）可是…可是我並沒有動機啊！",
+    "這是我在閣樓找到的頭髮。（拿出白金色頭髮）",
+    "在此之前我們並沒有人去過閣樓，也就是說，這根頭髮只能是在我們來到這棟別館之前，就已經在這裡工作的，女僕小姐的頭髮。",
+    "但是，女僕小姐的頭髮是棕色的啊？",
+    "沒錯，所以，應該說這是偽裝成女僕小姐的那個人的頭髮，你說對嗎？苦愛酒。（銳利的眼神）",
+    "（撕下臉上的易容）",
+    "啊啦啊啦，你好像知道的太多了噢，小偵探（危險的笑）。",
+    "喂喂，真的假的啊？易容這種東西原來是真的存在的嗎！",
+    "不過，她又是為了什麼要殺死大上先生呢？",
+    "因為大上先生買下了這座別墅。而這座別墅之前是她所在的組織--酒廠的大Boss，酒廠老闆所有。",
+    "而大上先生買下別墅就是因為聽說了寶藏的事，他為了找到寶藏所以假冒怪盜積德的名義召集我們，並自導自演了這場宴會。而你正好借此機會混進來準備伺機在宴會上殺了大上先生對吧？",
+    "猜對了，因為大上助善阻礙了Boss的財產回收，所以只好把他除掉囉。",
+    "所以，既然都被發現了（拿出一把手槍指向眾人），那麼就請諸位繼續配合幫忙找到寶藏吧！（微笑）",
+    "（眼鏡後的眼睛睜開）",
+    "（與角蘭對視了一眼）",
+    "抱歉，我可沒有這個閒功夫在這裡陪你玩尋寶遊戲。（上前虛晃一步）",
+    "（藉機踢掉苦愛酒手上的槍）",
+    "！",
+    "（將苦愛酒制伏住）",
+    "好誒！（握拳）",
+    "唉啊，大意了啊。",
+    "你還在等什麼？波本（冷聲）",
+    "（將槍對準洗衣機的太陽穴）",
+    "我想大家還是乖乖聽話比較好。（禮貌的微笑）",
+    "嘖！可惡。",
+    "暗示你這傢伙，沒想到你也是一夥的。",
+    "真是抱歉了毛利老師，不過任務在身我也沒辦法。（聳聳肩）",
+    "好了，閒話就到這邊結束，快點開始找寶藏吧！（撿回手槍）",
+
+]
+  var currentIndex = -1;
+  var sentenceElement = document.getElementById('sentence');
+  var backgroundImageElement = document.getElementById('background-image');
+  var roleImageElement = document.getElementById('role');
+function A(){
+    roleImageElement.src = '滾筒洗衣機.png';
+    roleImageElement.style.width = '230px';
+    roleImageElement.style.height = '230px';
+}
+function B(){
+    roleImageElement.src = '角蘭.png';
+    roleImageElement.style.width = '220px';
+    roleImageElement.style.height = '211px';
+}
+function C(){
+    roleImageElement.src = '毛利小五狼.png';
+    roleImageElement.style.width = '240px';
+    roleImageElement.style.height = '200px';
+}
+function D(){
+    roleImageElement.src = '貓哥.png';
+    roleImageElement.style.width = '190px';
+    roleImageElement.style.height = '200px';
+}
+function E(){
+    roleImageElement.src = '腹部平刺.png';
+    roleImageElement.style.width = '190px';
+    roleImageElement.style.height = '200px';
+}
+function F(){
+    roleImageElement.src = '暗示透.png';
+    roleImageElement.style.width = '200px';
+    roleImageElement.style.height = '200px';
+}
+function G(){
+    roleImageElement.src = '白馬王子探.png';
+    roleImageElement.style.width = '200px';
+    roleImageElement.style.height = '200px';
+}
+function H(){
+    roleImageElement.src = '大上助善.png';
+    roleImageElement.style.width = '210px';
+    roleImageElement.style.height = '210px';
+}
+function I(){
+    roleImageElement.src = '女僕.png';
+    roleImageElement.style.width = '190px';
+    roleImageElement.style.height = '200px';
+}
+function J(){
+    roleImageElement.src = '神秘人.png';
+    roleImageElement.style.width = '190px';
+    roleImageElement.style.height = '200px';
+}
+function K(){
+    roleImageElement.src = '無.jpg';
+    roleImageElement.style.width = '1px';
+    roleImageElement.style.height = '1px';
+}
+function L(){
+    roleImageElement.src = '假人.png';
+    roleImageElement.style.width = '190px';
+    roleImageElement.style.height = '200px';
+}
+function M(){
+    roleImageElement.src = '苦愛酒.png';
+    roleImageElement.style.width = '240px';
+    roleImageElement.style.height = '240px';
+}
+  function nextSentence() {
+  if (currentIndex < sentences.length - 1) {
+    currentIndex++;
+    sentenceElement.innerText = sentences[currentIndex];
+    if (sentences[currentIndex] == "好了，小鬼，把我們全部人都召集到這裡到底要做什麼？") {
+        C();
+   }
+   if (sentences[currentIndex] == "我已經破解了犯人所使用的手法，而犯人，就在我們之中！") {
+        A();
+   }
+   if (sentences[currentIndex] == "什麼！？（震驚的摀住嘴）") {
+        B();
+   }
+   if (sentences[currentIndex] == "這麼簡單的手法，真以為我們看不出來啊？（白眼）") {
+        E();
+   }
+   if (sentences[currentIndex] == "竟然敢在這麼多名偵探面前犯案，真不知該說兇手過於大膽還是過於愚蠢。") {
+        G();
+   }
+   if (sentences[currentIndex] == "那…那還真是好險啊……（冷汗）") {
+        C();
+   }
+   if (sentences[currentIndex] == "因此能做到這件事的，只有去過廚房的毛利先生、貓先生、已經成為一具屍體的大上先生，還有，一直待在廚房的女僕小姐了。") {
+        E();
+   }
+   if (sentences[currentIndex] == "什麼…！？（慌張）可是…可是我並沒有動機啊！") {
+        I();
+   }
+   if (sentences[currentIndex] == "這是我在閣樓找到的頭髮。（拿出白金色頭髮）") {
+        A();
+   }
+   if (sentences[currentIndex] == "但是，女僕小姐的頭髮是棕色的啊？") {
+        B();
+   }
+   if (sentences[currentIndex] == "沒錯，所以，應該說這是偽裝成女僕小姐的那個人的頭髮，你說對嗎？苦愛酒。（銳利的眼神）") {
+        A();
+   }
+   if (sentences[currentIndex] == "（撕下臉上的易容）") {
+        I();
+   }
+   if (sentences[currentIndex] == "啊啦啊啦，你好像知道的太多了噢，小偵探（危險的笑）。"){
+       M();
+   }
+   if (sentences[currentIndex] == "喂喂，真的假的啊？易容這種東西原來是真的存在的嗎！") {
+        E();
+   }
+   if (sentences[currentIndex] == "不過，她又是為了什麼要殺死大上先生呢？") {
+        G();
+   }
+   if (sentences[currentIndex] == "因為大上先生買下了這座別墅。而這座別墅之前是她所在的組織--酒廠的大Boss，酒廠老闆所有。") {
+        A();
+   }
+   if (sentences[currentIndex] == "猜對了，因為大上助善阻礙了Boss的財產回收，所以只好把他除掉囉。") {
+        M();
+   }
+   if (sentences[currentIndex] == "（眼鏡後的眼睛睜開）") {
+        D();
+   }
+   if (sentences[currentIndex] == "（與角蘭對視了一眼）") {
+        A();
+   }
+   if (sentences[currentIndex] == "（藉機踢掉苦愛酒手上的槍）") {
+        B();
+   }
+   if (sentences[currentIndex] == "！") {
+        M();
+   }
+   if (sentences[currentIndex] == "（將苦愛酒制伏住）") {
+        D();
+   }
+   if (sentences[currentIndex] == "好誒！（握拳）") {
+        E();
+   }
+   if (sentences[currentIndex] == "唉啊，大意了啊。") {
+        M();
+   }
+   if (sentences[currentIndex] == "（將槍對準洗衣機的太陽穴）") {
+        F();
+   }
+   if (sentences[currentIndex] == "嘖！可惡。") {
+        E();
+   }
+   if (sentences[currentIndex] == "暗示你這傢伙，沒想到你也是一夥的。") {
+        C();
+   }
+   if (sentences[currentIndex] == "真是抱歉了毛利老師，不過任務在身我也沒辦法。（聳聳肩）") {
+        F();
+   }
+   if (sentences[currentIndex] == "好了，閒話就到這邊結束，快點開始找寶藏吧！（撿回手槍）") {
+        M();
+   }
+}
+else{
+     alert("對話結束！開始搜查囉！！");
+    window.location.href = '第二輪搜查.html';
+}
+  }
+  document.getElementById('introduction').addEventListener('click', function() {
+      var characterIntroductionWindow = window.open('人物介紹(無紐).html', '_blank', 'width=600,height=400');
+      if (characterIntroductionWindow) {
+        characterIntroductionWindow.moveTo(
+          (window.screen.width - characterIntroductionWindow.outerWidth) / 2,
+          (window.screen.height - characterIntroductionWindow.outerHeight) / 2
+        );
+      }
+    });
+    var isMusicPlaying = false;
+  const audio = document.getElementById('audio');
+  function toggleMusic() {
+    if (isMusicPlaying) {
+      audio.pause();
+    } else {
+      audio.play();
+    }
+    isMusicPlaying = !isMusicPlaying;
+  }
+  document.getElementById('playButton').addEventListener('click', function () {
+    toggleMusic();
+  });
+  audio.addEventListener('ended', function () {
+    isMusicPlaying = false;
+    audio.play(); 
+  });
+  
+</script>
+</body>
+</html>
