@@ -230,8 +230,8 @@ function M(){
 }
 function N(){
     roleImageElement.src = '怪盜積德.png';
-    roleImageElement.style.width = '190px';
-    roleImageElement.style.height = '200px';
+    roleImageElement.style.width = '180px';
+    roleImageElement.style.height = '210px';
 }
   function nextSentence() {
   if (currentIndex < sentences.length - 1) {
@@ -381,11 +381,11 @@ function N(){
     }
 }
 else{
-    window.location.href = '封底.html';
+    window.location.href = '遊戲結束.html';
 }
   }
   document.getElementById('introduction').addEventListener('click', function() {
-      var characterIntroductionWindow = window.open('人物介紹(無紐).html', '_blank', 'width=600,height=400');
+      var characterIntroductionWindow = window.open('人物介紹4.html', '_blank', 'width=600,height=400');
       if (characterIntroductionWindow) {
         characterIntroductionWindow.moveTo(
           (window.screen.width - characterIntroductionWindow.outerWidth) / 2,
