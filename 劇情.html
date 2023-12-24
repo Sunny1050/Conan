@@ -91,7 +91,6 @@
     <audio id="audio" src="音樂.MP3"></audio>
   </div>
 </body>
-</html>
   <script>
   var sentences = [
   "大家好，我是高中生蒸蛋滾筒洗衣機",
@@ -190,9 +189,11 @@
 "（聳了聳肩）我沒意見。",
 "我也沒有。",
 "那就這麼辦吧。",
+"(眾人開始用餐)",
 "大家都聽說了40年前的悲劇了吧？不過，這座別墅內其實還藏著當年那兩名小偷沒有帶走的巨額寶藏，而今天邀請諸位前來的目的，就是希望你們能幫我找出這個寶藏。",
-"我在因緣際會之下得到了寶藏的線索，（講謎語）。",
-"不過，你們之中只能有一個人來向我提交答案。我很期待看到你們重新上演一遍40年前那場慘絕人寰的悲劇，我會好好欣賞你們為了寶物互相殘殺的醜態。",
+"請諸位確認一下你們的桌子下方。",
+"是塔羅牌?(驚訝)",
+"這是我在因緣際會之下得到的寶藏的線索，不過，你們之中只能有一個人來向我提交答案。我很期待看到你們重新上演一遍40年前那場慘絕人寰的悲劇，我會好好欣賞你們為了寶物互相殘殺的醜態。",
 "哼！真是無聊至極。（拿起手上的煙吸了一口）",
 "要我們自相殘殺，你想的美。",
 "（冷笑）你們沒有人能退出這場遊戲，你們的車和唯一能離開這裡的橋都被我炸毀了。",
@@ -524,60 +525,69 @@ function L(){
         H();
     }
     if(currentIndex==96){
+        K();
+    }
+    if(currentIndex==97){
         J();
     }
     if(currentIndex==99){
-        H();
-    }
-    if(currentIndex==100){
-        C();
-    }
-    if(currentIndex==101){
-        J();
-    }
-    if(currentIndex==103){
-        H();
-    }
-    if(currentIndex==105){
         B();
     }
-    if(currentIndex==106){
-        F();
+    if(currentIndex==100){
+        J();
     }
-    if(currentIndex==107){
+    if(currentIndex==101){
         H();
     }
+    if(currentIndex==102){
+        C();
+    }
+    if(currentIndex==103){
+        J();
+    }
+    if(currentIndex==105){
+        H();
+    }
+    if(currentIndex==107){
+        B();
+    }
     if(currentIndex==108){
-        D();
+        F();
     }
     if(currentIndex==109){
-        C();
+        H();
     }
     if(currentIndex==110){
         D();
     }
     if(currentIndex==111){
-        F();
-    }
-    if(currentIndex==112){
-        A();
-    }
-    if(currentIndex==113){
         C();
     }
+    if(currentIndex==112){
+        D();
+    }
+    if(currentIndex==113){
+        F();
+    }
     if(currentIndex==114){
-        G();
+        A();
     }
     if(currentIndex==115){
-        E();
+        C();
     }
     if(currentIndex==116){
-        K();
+        G();
     }
     if(currentIndex==117){
         E();
     }
     if(currentIndex==118){
+        K();
+    }
+    if(currentIndex==119){
+        E();
+    }
+    if(currentIndex==120){
         L();
     }
     if (
@@ -632,7 +642,7 @@ function L(){
     }
     if (
       sentences[currentIndex - 1] == "那就這麼辦吧。" &&
-      sentences[currentIndex] == "大家都聽說了40年前的悲劇了吧？不過，這座別墅內其實還藏著當年那兩名小偷沒有帶走的巨額寶藏，而今天邀請諸位前來的目的，就是希望你們能幫我找出這個寶藏。"
+      sentences[currentIndex] == "(眾人開始用餐)"
     ) {
       backgroundImageElement.style.transform = 'translateX(-100%)';
       setTimeout(function () {
@@ -643,11 +653,11 @@ function L(){
     }
     }
     else {
-    alert("對話結束！開始搜查囉！！");
+    alert("對話結束！開始搜查囉!!");
     window.location.href = '第一輪搜查.html';
   }
 }
-document.getElementById('introduction').addEventListener('click', function() {
+ document.getElementById('introduction').addEventListener('click', function() {
       var characterIntroductionWindow = window.open('人物介紹(無紐).html');
       if (characterIntroductionWindow) {
         characterIntroductionWindow.moveTo(
